@@ -6,13 +6,13 @@ abstract class StoreModule<T extends StoreModule<T>> {
   /// Parent store of the module.
   final Store store;
 
-  final _onChangeStreamController = StreamController<void>(sync: true);
+  final _onChangeController = StreamController<void>.broadcast(sync: true);
 
   /// Called after [setState] to update the store's `onChange` stream.
   ModuleUpdatedCallback _moduleUpdated;
 
   /// Stream of updates after `setState`. The value of the stream can be discarded (will always be `null`)
-  Stream get onChange => _onChangeStreamController.stream;
+  Stream get onChange => _onChangeController.stream;
 
   /// Create a store module.
   ///
@@ -37,7 +37,7 @@ abstract class StoreModule<T extends StoreModule<T>> {
   void setState(void Function() fn) {
     preSetState();
     fn();
-    _onChangeStreamController.add(null);
+    _onChangeController.add(null);
     postSetState();
     _moduleUpdated();
   }
@@ -52,6 +52,6 @@ abstract class StoreModule<T extends StoreModule<T>> {
 
   /// Disposes of the module. Automatically done if called the store's `dispose`.
   void dispose() {
-    _onChangeStreamController.close();
+    _onChangeController.close();
   }
 }

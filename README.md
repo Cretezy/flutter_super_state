@@ -12,7 +12,7 @@ Add the package to your `pubspec.yaml` to install:
 
 ```yaml
 dependencies:
-  flutter_super_state: ^0.1.1
+  flutter_super_state: ^0.1.2
 ```
 
 See [Flutter example](https://github.com/Cretezy/flutter_super_state/blob/master/example/flutter_super_state_example.dart) for a full overview.
@@ -29,7 +29,7 @@ import 'package:flutter_super_state/flutter_super_state.dart';
 
 // Modules extend `StoreModule` with it's own type
 class CounterModule extends StoreModule<CounterModule> {
-  // Read only property, to avoid accidently setting `counter` without calling `setState`
+  // Read only property, to avoid accidentally setting `counter` without calling `setState`
   int get counter => _counter;
 
   var _counter = 0;
@@ -240,6 +240,8 @@ You can also use the `preSetState` which is called before `setState` is done.
 Both store and module expose `onChange` streams which are called whenever:
 - Module: The module updates
 - Store: Any module updates
+
+> Both of these only dispatch `null`, indicating that an update was done.
 
 ## Dispose
 

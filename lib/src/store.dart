@@ -5,10 +5,10 @@ import 'package:flutter_super_state/src/store_module.dart';
 typedef ModuleUpdatedCallback = void Function();
 
 class Store {
-  final _onChangeStreamController = StreamController<void>(sync: true);
+  final _onChangeController = StreamController<void>.broadcast(sync: true);
 
   /// Stream of updates after [StoreModule.setState] in any child module. The value of the stream can be discarded (will always be `null`)
-  Stream get onChange => _onChangeStreamController.stream;
+  Stream get onChange => _onChangeController.stream;
 
   final _modules = Map<String, StoreModule>();
 
@@ -33,7 +33,7 @@ class Store {
     _modules[T.toString()] = module;
 
     return () {
-      _onChangeStreamController.add(null);
+      _onChangeController.add(null);
     };
   }
 
@@ -60,7 +60,7 @@ class Store {
 
   /// Dispose of the store, and all of it's modules.
   void dispose() {
-    _onChangeStreamController.close();
+    _onChangeController.close();
 
     _modules.forEach((_, value) {
       value.dispose();

@@ -1,6 +1,6 @@
 name: flutter_super_state
 description: A simple super state management library for Flutter (with async support).
-version: 0.1.1
+version: 0.1.2
 homepage: https://github.com/Cretezy/flutter_super_state
 
 environment:
