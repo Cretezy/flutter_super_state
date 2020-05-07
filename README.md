@@ -12,7 +12,7 @@ Add the package to your `pubspec.yaml` to install:
 
 ```yaml
 dependencies:
-  flutter_super_state: ^0.1.0
+  flutter_super_state: ^0.1.1
 ```
 
 ## Modules
