@@ -10,7 +10,7 @@ class Store {
   /// Stream of updates after [StoreModule.setState] in any child module. The value of the stream can be discarded (will always be `null`)
   Stream get onChange => _onChangeController.stream;
 
-  final _modules = Map<String, StoreModule>();
+  final _modules = Map<Type, StoreModule>();
 
   /// Do not call this manually! It will not update the store's [onChange] when the module is called.
   /// This is automatically called when calling `super` for a [StoreModule]
@@ -18,19 +18,15 @@ class Store {
   /// Registers module of type [T] to the store.
   ///
   /// Only one module per type is allowed, and [T] must be unique as string.
-  ModuleUpdatedCallback registerModule<T extends StoreModule<T>>(
-      StoreModule module) {
-    if (T == StoreModule) {
-      throw new Exception("T is StoreModule. Did you forget to pass in T?");
-    }
-
-    final exists = _getModule<T>() != null;
+  ModuleUpdatedCallback registerModule(StoreModule module) {
+    final exists = _getModule(module.runtimeType) != null;
 
     if (exists) {
-      throw new Exception("Module of type $T already registered");
+      throw new Exception(
+          "Module of type ${module.runtimeType} already registered");
     }
 
-    _modules[T.toString()] = module;
+    _modules[module.runtimeType] = module;
 
     return () {
       _onChangeController.add(null);
@@ -40,12 +36,12 @@ class Store {
   /// Get the module of type [T] inside the store.
   ///
   /// Will throw an error if the module doesn't exist in the store
-  T getModule<T extends StoreModule<T>>() {
+  T getModule<T extends StoreModule>() {
     if (T == StoreModule) {
       throw new Exception("T is StoreModule. Did you forget to pass in T?");
     }
 
-    final module = _getModule<T>();
+    final module = _getModule<T>(T);
 
     if (module == null) {
       throw new Exception("Could not find module of type $T");
@@ -54,8 +50,8 @@ class Store {
     return module;
   }
 
-  T _getModule<T>() {
-    return _modules[T.toString()] as T;
+  T _getModule<T extends StoreModule>(Type moduleType) {
+    return _modules[moduleType] as T;
   }
 
   /// Dispose of the store, and all of it's modules.

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_super_state/flutter_super_state.dart';
 
-class CounterModule extends StoreModule<CounterModule> {
+class CounterModule extends StoreModule {
   int get counter => _counter;
 
   var _counter = 0;

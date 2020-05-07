@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_super_state/src/store.dart';
 
-abstract class StoreModule<T extends StoreModule<T>> {
+abstract class StoreModule {
   /// Parent store of the module.
   final Store store;
 
@@ -20,7 +20,7 @@ abstract class StoreModule<T extends StoreModule<T>> {
   ///
   /// This will automatically register the module in the store.
   StoreModule(this.store) : assert(store != null, "Store must not be null") {
-    _moduleUpdated = store.registerModule<T>(this);
+    _moduleUpdated = store.registerModule(this);
   }
 
   /// Call to update all dependencies after the the update is completed.

@@ -1,3 +1,8 @@
+## [0.2.0] - 2020-05-07
+
+- Remove generic from `StoreModule`
+- Added more tests
+
 ## [0.1.3] - 2020-05-07
 
 - Added Medium link, fix README typos

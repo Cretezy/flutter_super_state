@@ -26,7 +26,7 @@ typedef ModuleBuilderChildBuilder<T> = Widget Function(
 ///   ),
 /// )
 /// ```
-class ModuleBuilder<T extends StoreModule<T>> extends StatelessWidget {
+class ModuleBuilder<T extends StoreModule> extends StatelessWidget {
   /// Module builder.
   final ModuleBuilderBuilder<T> builder;
 

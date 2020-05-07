@@ -29,8 +29,8 @@ Actions are simply class methods which can call `setState`, do other async opera
 ```dart
 import 'package:flutter_super_state/flutter_super_state.dart';
 
-// Modules extend `StoreModule` with it's own type
-class CounterModule extends StoreModule<CounterModule> {
+// Modules extend `StoreModule`
+class CounterModule extends StoreModule {
   // Read only property, to avoid accidentally setting `counter` without calling `setState`
   int get counter => _counter;
 
@@ -71,7 +71,7 @@ class CounterModule extends StoreModule<CounterModule> {
 }
 
 // Another module, which uses the CounterModule
-class UserModule extends StoreModule<UserModule> {
+class UserModule extends StoreModule {
   bool get isLoggedIn => _isLoggedIn;
 
   var _isLoggedIn = false;
@@ -215,7 +215,7 @@ Widget build(BuildContext context) {
 You can add hooks per module for pre- and post-update. This can be useful for persisting state.
 
 ```dart
-class PersistCounterModule extends StoreModule<PersistCounterModule> {
+class PersistCounterModule extends StoreModule {
   int get counter => _counter;
   var _counter = 0;
 
