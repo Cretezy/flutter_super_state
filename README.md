@@ -14,7 +14,7 @@ Add the package to your `pubspec.yaml` to install:
 
 ```yaml
 dependencies:
-  flutter_super_state: ^0.1.3
+  flutter_super_state: ^0.2.0
 ```
 
 See [Flutter example](https://github.com/Cretezy/flutter_super_state/blob/master/example/flutter_super_state_example.dart) for a full overview.
