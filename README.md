@@ -94,6 +94,11 @@ class UserModule extends StoreModule<UserModule> {
 }
 ```
 
+> The read-only properties are optional but strongly recommended to prevent accidentally changing
+> the state of a module without updating it, which would not update your views.
+>
+> Always do state changes inside `setState` (same as a `StatefulWidget`)
+
 ## Store
 
 Creating a store is very simple.
