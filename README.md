@@ -15,6 +15,9 @@ dependencies:
   flutter_super_state: ^0.1.1
 ```
 
+See [Flutter example](https://github.com/Cretezy/flutter_super_state/blob/master/example/flutter_super_state_example.dart) for a full overview.
+
+
 ## Modules
 
 First, let's create your modules. Modules hold both state (which can be changed inside `setState`) and actions.
