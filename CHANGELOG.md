@@ -1,3 +1,7 @@
+## [0.1.3] - 2020-05-07
+
+- Added Medium link, fix README typos
+
 ## [0.1.2] - 2020-05-07
 
 - Fix multiple stream listeners

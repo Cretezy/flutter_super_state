@@ -14,7 +14,7 @@ Add the package to your `pubspec.yaml` to install:
 
 ```yaml
 dependencies:
-  flutter_super_state: ^0.1.2
+  flutter_super_state: ^0.1.3
 ```
 
 See [Flutter example](https://github.com/Cretezy/flutter_super_state/blob/master/example/flutter_super_state_example.dart) for a full overview.
@@ -126,7 +126,7 @@ runApp(StoreProvider(
 
 This will make the store accessibly anywhere in your application using `StoreProvider.store(context)`, or using the builders.
 
-### Module Builder
+## Module Builder
 
 To get a module in Flutter views, you can use `ModuleBuilder`:
 
@@ -145,7 +145,8 @@ The `builder` will rebuild when the module calls `setState`.
 
 ### Child builder
 
-If you have a last part of the state which doesn't update, pass it as `child` to the `ModuleBuilder` and use `childBuilder`:
+If you have a large part of the state which doesn't update,
+you can pass it as `child` to the `ModuleBuilder` and use `childBuilder`:
 
 ```dart
 @override
@@ -182,10 +183,9 @@ Widget build(BuildContext context) {
 
 The `builder` will rebuild when any module calls `setState`. It is preferable to use `ModuleBuilder` which only updates when the listened module updates.
 
-
 ### Child builder
 
-If you have a last part of the state which doesn't update, pass it as `child` to the `StoreBuilder` and use `childBuilder`:
+If you have a large part of the state which doesn't update, pass it as `child` to the `StoreBuilder` and use `childBuilder`:
 
 ```dart
 @override
@@ -207,7 +207,7 @@ Widget build(BuildContext context) {
 
 ## Hooks (Persistance)
 
-You can adds hooks per module for pre- and post-update. This can be useful for persisting state.
+You can add hooks per module for pre- and post-update. This can be useful for persisting state.
 
 ```dart
 class PersistCounterModule extends StoreModule<PersistCounterModule> {
@@ -215,13 +215,15 @@ class PersistCounterModule extends StoreModule<PersistCounterModule> {
   var _counter = 0;
 
   PersistCounterModule(Store store, int initialCounter = 0):
+    // Initial state
     _counter = initialCounter,
     super(store);
 
-  // Synchronous actions
   void increment() {
     setState(() {
+      // Will call preSetState here
       _counter++;
+      // Will call postSetState here
     });
   }
 
@@ -236,6 +238,8 @@ PersistCounterModule(store, storage.get("counter"));
 ```
 
 You can also use the `preSetState` which is called before `setState` is done.
+
+> It a a convention that the `store` parameter should come first in a module's constructor.
 
 ## Streams
 
