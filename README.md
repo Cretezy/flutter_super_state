@@ -6,6 +6,8 @@ Super State uses a central store, while holds your modules. Modules are similar 
 
 [Pub](https://pub.dev/packages/flutter_super_state) - [API Docs](https://pub.dev/documentation/flutter_super_state/latest/) - [GitHub](https://github.com/Cretezy/flutter_super_state)
 
+Read the [Medium article](https://medium.com/@cretezy/flutter-super-state-simple-state-management-for-flutter-e6ca6e360470).
+
 ## Setup
 
 Add the package to your `pubspec.yaml` to install:
