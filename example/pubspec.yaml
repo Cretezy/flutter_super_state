@@ -1,0 +1,13 @@
+name: flutter_super_state_example
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_super_state:
+    path: ..
+
+flutter:
+  uses-material-design: true
