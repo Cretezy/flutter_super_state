@@ -1,3 +1,7 @@
+## Unreleased
+
+- Add CI
+
 ## [0.2.0] - 2020-05-07
 
 - Remove generic from `StoreModule`
