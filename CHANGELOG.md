@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Add CI
+- Add video link & testing section in README
 
 ## [0.2.0] - 2020-05-07
 

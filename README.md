@@ -6,7 +6,7 @@ Super State uses a central store, while holds your modules. Modules are similar 
 
 [Pub](https://pub.dev/packages/flutter_super_state) - [API Docs](https://pub.dev/documentation/flutter_super_state/latest/) - [GitHub](https://github.com/Cretezy/flutter_super_state)
 
-Read the [Medium article](https://medium.com/@cretezy/flutter-super-state-simple-state-management-for-flutter-e6ca6e360470).
+Read the [Medium article](https://medium.com/@cretezy/flutter-super-state-simple-state-management-for-flutter-e6ca6e360470), or view the [video tutorial](https://www.youtube.com/watch?v=uoMXfDMxopY).
 
 ## Setup
 
@@ -260,6 +260,107 @@ Both the store (if extended) and modules have a `dispose` method that is availab
 You can do cleanup of any value here (don't forget to call `super.dispose()` though).
 
 This method isn't usually called, as your store is active for the lifetime of your application.
+
+## Repository
+
+Easily add repositories or other dependencies to your module by simply passing them as arguments:
+
+```dart
+class AuthRepository {
+  // Optional: Useful for getting auth token for future request, etc...
+  final Store store;
+
+  AuthRepository(this.store);
+
+  Future<void> login(String username, String password) async {
+    // Do request, able to use store modules
+    final authToken = await doApiRequest(/* ... */);
+
+    return authToken;
+  }
+}
+
+class AuthModule extends StoreModule {
+  final AuthRepository authRepository;
+
+  var isLoggedIn = false;
+
+  AuthModule(
+    Store store, {
+    @required this.authRepository,
+  }) : super(store);
+
+  Future<void> login(String username, String password) async {
+    await authRepository.login(username, password);
+
+    setState(() {
+      isLoggedIn = true;
+    });
+  }
+
+  void logout() {
+    setState(() {
+      isLoggedIn = false;
+    });
+  }
+}
+
+
+final store = Store();
+// Create repository with store
+final authRepository = AuthRepository(store);
+// Register module with repository
+AuthModule(store, authRepository: authRepository);
+```
+
+## Testing
+
+You can easily test your store by simply mocking repositories:
+
+```dart
+class AuthRepositoryMock implements AuthRepository {
+  final Store store;
+  AuthRepositoryMock(this.store);
+
+  @override
+  Future<String> login() async {
+    // Mock request
+    return "mock-auth-token";
+  }
+}
+
+
+final store = Store();
+// Create repository mock
+final authRepositoryMock = AuthRepositoryMock();
+// Register module with mocked repository
+final authModule = AuthModule(store, authRepository: authRepositoryMock);
+
+// Call action
+await authModule.login("admin", "password");
+```
+
+You can also use something like [mockito](https://pub.dev/packages/mockito) to create real mocks:
+
+```dart
+class AuthRepositoryMock extends Mock implements AuthRepository {}
+
+
+final store = Store();
+final authRepositoryMock = AuthRepositoryMock();
+final authModule = AuthModule(store, authRepository: authRepositoryMock);
+
+
+// Stub login function
+when(authRepositoryMock.login())
+    .thenAnswer((_) => Future.value('mock-auth-token'));
+
+// Call action
+await authModule.login("admin", "password");
+
+// Verify mock was called with proper arguments
+verify(authRepositoryMock.login("admin", "password"))
+```
 
 ## Features and bugs
 
